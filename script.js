@@ -28,3 +28,14 @@ function listSelect(event) {
 }
 
 listaTarefas.addEventListener('click', listSelect);
+
+// https://www.w3schools.com/jsref/met_element_matches.asp
+function dblClick(event) {
+  if (event.target.matches('li.completed')) {
+    event.target.classList.remove('completed');
+  } else {
+    event.target.classList.add('completed');
+  }
+}
+
+listaTarefas.addEventListener('dblclick', dblClick);
