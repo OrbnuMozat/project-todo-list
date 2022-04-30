@@ -2,6 +2,7 @@ const textoTarefa = document.getElementById('texto-tarefa');
 const listaTarefas = document.getElementById('lista-tarefas');
 const criarTarefa = document.getElementById('criar-tarefa');
 let tarefa;
+const btnLimpa = document.getElementById('apaga-tudo');
 
 function capTexto() {
   tarefa = textoTarefa.value;
@@ -39,3 +40,12 @@ function dblClick(event) {
 }
 
 listaTarefas.addEventListener('dblclick', dblClick);
+
+// https://www.w3schools.com/js/js_loop_while.asp
+function clear() {
+  while (listaTarefas.hasChildNodes()) {
+    listaTarefas.removeChild(listaTarefas.firstChild);
+  }
+}
+
+btnLimpa.addEventListener('click', clear);
