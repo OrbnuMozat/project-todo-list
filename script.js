@@ -52,8 +52,9 @@ function clear() {
 btnLimpa.addEventListener('click', clear);
 
 function removeOk() {
-  while (listaTarefas.hasChildNodes('li.completed')) {
-    listaTarefas.removeChild(document.querySelector('.completed'));
+  const liCompleted = document.querySelectorAll('li.completed');
+  for (let i = 0; i < liCompleted.length; i += 1) {
+    listaTarefas.removeChild(liCompleted[i]);
   }
 }
 btkRemoveOk.addEventListener('click', removeOk);
