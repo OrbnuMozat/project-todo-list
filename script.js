@@ -11,7 +11,7 @@ textoTarefa.addEventListener('input', capTexto);
 
 function addTarefa() {
   const createLi = document.createElement('li');
-  createLi.innerHTML = tarefa;
+  createLi.innerText = tarefa;
   createLi.className = 'tarefas';
   listaTarefas.appendChild(createLi);
   textoTarefa.value = '';
@@ -20,14 +20,11 @@ function addTarefa() {
 criarTarefa.addEventListener('click', addTarefa);
 
 function listSelect(event) {
-  // const list = document.querySelectorAll('.tarefas');
-  // for (let i = 0; i < list.length; i += 1) {
-  //   // list.className.remove('selected');
-  // }
+  const liTarefas = document.querySelectorAll('li.tarefas');
+  for (let i = 0; i < liTarefas.length; i += 1) {
+    liTarefas[i].classList.remove('selected');
+  }
   event.target.classList.add('selected');
 }
-const liTarefas = document.querySelectorAll('.tarefas');
 
-liTarefas.forEach((item) => {
-  item.addEventListener('click', listSelect);
-});
+listaTarefas.addEventListener('click', listSelect);
