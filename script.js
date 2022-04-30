@@ -3,6 +3,7 @@ const listaTarefas = document.getElementById('lista-tarefas');
 const criarTarefa = document.getElementById('criar-tarefa');
 let tarefa;
 const btnLimpa = document.getElementById('apaga-tudo');
+const btkRemoveOk = document.getElementById('remover-finalizados');
 
 function capTexto() {
   tarefa = textoTarefa.value;
@@ -49,3 +50,10 @@ function clear() {
 }
 
 btnLimpa.addEventListener('click', clear);
+
+function removeOk() {
+  while (listaTarefas.hasChildNodes('li.completed')) {
+    listaTarefas.removeChild(document.querySelector('.completed'));
+  }
+}
+btkRemoveOk.addEventListener('click', removeOk);
