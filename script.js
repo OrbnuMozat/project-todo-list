@@ -12,15 +12,15 @@ function capTexto() {
 
 textoTarefa.addEventListener('input', capTexto);
 
-function addTarefa(newTarefa) {
+function addTarefa() {
   const createLi = document.createElement('li');
-  createLi.innerText = newTarefa;
+  createLi.innerText = tarefa;
   createLi.className = 'tarefas';
   listaTarefas.appendChild(createLi);
   textoTarefa.value = '';
 }
 
-criarTarefa.addEventListener('click', () => addTarefa(tarefa));
+criarTarefa.addEventListener('click', addTarefa);
 
 function listSelect(event) {
   const liTarefas = document.querySelectorAll('li.tarefas');
@@ -55,14 +55,17 @@ btnLimpa.addEventListener('click', clear);
 
 function removeCompletedInStorage(task) {
   const saved = JSON.parse(localStorage.getItem('savedList'));
-  const newSaved = saved.filter((item) => item !== task);
-  localStorage.setItem('savedList', JSON.stringify(newSaved));
+  if (saved) {
+    const newSaved = saved.filter((item) => !Object.keys(item).includes(task));
+    localStorage.setItem('savedList', JSON.stringify(newSaved));
+  }
 }
 
 function removeOk() {
   const liCompleted = document.querySelectorAll('li.completed');
   for (let i = 0; i < liCompleted.length; i += 1) {
-    removeCompletedInStorage(liCompleted[i].innerHTML);
+    const completed = liCompleted[i].innerHTML;
+    removeCompletedInStorage(completed);
     listaTarefas.removeChild(liCompleted[i]);
   }
 }
@@ -70,15 +73,33 @@ btkRemoveOk.addEventListener('click', removeOk);
 
 function saveButton() {
   const tarefas = document.querySelectorAll('li.tarefas');
-  const tarefasToSave = Object.values(tarefas).map((item) => item.innerHTML);
-  localStorage.setItem('savedList', JSON.stringify(tarefasToSave));
+  // const tarefasToSave = Object.values(tarefas).map((item) => item.innerHTML);
+  // const finished = Object.values(tarefas).map((item) => item.classList.value);
+  const finished = Object.values(tarefas).map((item) => {
+    const itemtarefa = item.innerHTML;
+    const itemClass = item.classList.value.includes('completed');
+    return { [itemtarefa]: itemClass };
+  });
+  localStorage.setItem('savedList', JSON.stringify(finished));
 }
 btnSave.addEventListener('click', saveButton);
+
+function addTarefaSaved(taskItem, bool) {
+  const createLi = document.createElement('li');
+  createLi.innerText = taskItem;
+  if (bool.includes(true)) {
+    createLi.className = 'tarefas completed';
+  } else {
+    createLi.className = 'tarefas';
+  }
+  listaTarefas.appendChild(createLi);
+}
 
 function recoverSaved() {
   const saved = JSON.parse(localStorage.getItem('savedList'));
   if (saved) {
-    return saved.map((item) => addTarefa(item));
+    saved.map((object) =>
+      addTarefaSaved(Object.keys(object), Object.values(object)));
   }
 }
 
