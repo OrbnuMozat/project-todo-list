@@ -6,6 +6,6 @@
 
 ---
 
-## O que deverá foi desenvolvido
+## O que foi desenvolvido
 
 - Uma lista de tarefas usando `HTML`, `CSS` e `JavaScript`.
